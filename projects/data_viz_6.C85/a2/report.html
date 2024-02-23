@@ -150,8 +150,8 @@
 				estate investment corporations).
 			</p>
 			<p>
-				Due to the missing zip codes in the Cambridge dataset, and its relatively small size compared to the Boston dataset, we'll focus on the Boston
-				dataset for the remainder of this report. For location information, the Boston dataset has both <code>ZIPCODE_prior</code> and
+				Due to the missing zip codes in the Cambridge dataset, and its relatively small size compared to the Boston dataset, <b>we'll use only the Boston
+				dataset for the remainder of this report</b>. For location information, the Boston dataset has both <code>ZIPCODE_prior</code> and
 				<code>ZIPCODE_post</code> columns. We can start with a basic histogram showing the counts of each zip code in our dataset:
 			</p>
 
@@ -163,10 +163,10 @@
 			</figure>
 			<p>
 				The histogram above shows the number of times each zip code appears in the Boston dataset, across all of the included years. Here we're flipping
-				the axes of a traditional histogram for more readable axis labels (Tableau doesn't have a label rotation feature), and sorting zip codes in
-				decreasing order of count since the natural numeric ordering of zip codes isn't obviously meaningful (unless you're a zip code guru). Already a
-				few things jump out at us: very large differences across zip codes (~210 in 02127 vs 1 in each of 02111, 02199, 02467) and the perhaps surprising presence
-				of a "Null" column in the far left with zero counts.
+				the axes of a traditional histogram for more readable axis labels, and sorting zip codes in decreasing order of count since the natural
+				numeric ordering of zip codes isn't obviously meaningful (unless you're a zip code guru). Already a few things jump out at us: very large
+				differences across zip codes (~210 in 02127 vs 1 in each of 02111, 02199, 02467) and the perhaps surprising presence of a "Null" column in the
+				far left with zero counts.
 			</p>
 
 			<p>
@@ -200,7 +200,7 @@
 			<p>
 				In the above figure, we can now see that the "Null" column is gone, and we've increased the sample size of some of the real zip codes (e.g. we now have
 				~280 datapoints for zip code 02127 as opposed to ~210 previously). After fixing the misformatting issue, the data also passes the sanity check that
-				<code>ZIPCODE_prior == ZIPCODE_post</code> for all rows, which makes sense since we don't expect a building to move after being convertted to a condo.
+				<code>ZIPCODE_prior == ZIPCODE_post</code> for all rows, which makes sense since we don't expect a building to move after being converted to a condo.
 			</p>
 
 			<h3>Check conversion year</h3>
@@ -212,7 +212,8 @@
 			<figure>
 				<img src="images/4_year_comparison.svg" alt="Table of condo conversions by year before and after" />
 				<figcaption>
-				Table of number of condo conversions by <code>prior_year</code> and <code>post_year</code>.
+				Table of number of condo conversions by <code>prior_year</code> and <code>post_year</code>. Note that empty cells indicate that no data points have
+				that combination of <code>prior_year</code> and <code>post_year</code>
 				</figcaption>
 			</figure>
 			<p>
@@ -269,7 +270,7 @@
 				<li>Grouping the two tax-exempt categories</li>
 				<li><code>Commercial</code>, <code>Commercial condominium</code>, and <code>Commercial land</code> grouped to a single "Commercial" category</li>
 				<li><code>Residential condominium unit</code>, <code>Condominium main</code>, and <code>Condo parking</code> grouped to a single "Condominium" category</li>
-				<li>All residential groups combined to a single "Residential" category</li>
+				<li>All codes referring to residential properties with varying numbers of units combined to a single "Residential" category</li>
 			</ul>
 			<p>
 				While the first two points above are largely for simplifying our exploratory data analysis, the last two (Condominium and Residential) will have an impact
@@ -280,7 +281,7 @@
 					<ul><li>
 						The full description of <code>Condominium main</code> is "physical structure housing all related condo units with no assessed value", meaning that this
 						category could include both residential and commercial condominiums. By potentially including some commercial condominiums, we may be slightly
-						overestimating the number of residential rental units converted to residential condominiums (i.e. in the case of residential rental -> commercial condominum)
+						overestimating the number of residential rental units converted to residential condominiums (i.e. in the case of residential rental to commercial condominum)
 						but these are still residential units that have been taken off the rental market.
 					</li></ul>
 				<li>Including <code>CP (Condo parking)</code> in our "Condominium" category</li>
@@ -308,7 +309,7 @@
 			<p>
 				In the above table, we see the full set of land use conversion events in our dataset. We can immediately see that the largest bucket is the conversions we're
 				actually interested in: Residential -> Condominium. However, we do also have many other extraneous conversion events that we're not interested in for our current
-				analysis goals. It's also interesting to see many events of conversions within the "Residential" category, which could be additions or removal of units in
+				analysis goals. It's also interesting to see many events of conversions within the Residential category, which could be additions or removal of units in
 				existing homes, which would also be an interesting resource if we wanted to look at housing market growth in future work.
 
 				We also see a lot of conversions within the Condominium category, and while I won't show data for it here, these mostly seem to be conversions from
@@ -354,9 +355,9 @@
 			</figure>
 			<p>
 				From the histogram above, we can see that our observations from the map largely hold once grouped by neighborhood, but also can more easily glean information like the fact that
-				Central Boston doesn't seem to have many conversions, where the previous plot would've required us to manually add up numbers to come to the same conclusion. If you're like me,
-				then these neighborhood names may not be that useful in isolation as well. So below I've provided the same map as before, but now just colored by each zip code's assignment to a
-				neighborhood.
+				Central Boston doesn't seem to have many conversions, whereas the previous plot required us to manually add up numbers to come to the same conclusion. If you're like me,
+				then these neighborhood names may not be that useful in isolation as well. So below I've provided the same map as before, but now just colored by each zip code's neighborhood
+				assignment.
 			</p>
 
 			<figure>
@@ -381,11 +382,11 @@
 			</figure>
 			<p>
 				In the plot above, we can observe the trend of number of condo conversion events as a function of time. In particular, we're looking at the year after the conversion event, as
-				this should give a better sense of when conversions completed, although looking at the year before would generate the same shape offset by 1 year (as we saw in Figure 4).
+				this should give a better sense of when conversions completed, although looking at the year before would generate the same shape offset by 1 year.
 			</p>
 			<p>
 				While it appears that there was a trend of increasing number of condo conversions from 2016-2019, we observe a sharp drop in conversions during 2020-2021, which is likely
-				attributable to the COVID-19 pandemic shutting down many ongoing construction and renovation projects. We can then see an uptick in 2022, presumably as COVID-era restrictions were
+				attributable to the COVID-19 pandemic shutting down many ongoing construction and renovation projects. We then see an uptick in 2022, presumably as COVID-era restrictions were
 				lifted, supply chains began moving again, and individuals began to go back to work. The drop going into 2023 may be attributable to another aspect of the COVID-19 pandemic: a
 				period of low interest rates for loans followed by increasingly high interest rates. It's possible that the uptick going into 2022 may be both the completion of delayed conversions
 				as well as a spate of new conversions driven by "cheap money" in the form of low interest rate loans. While we won't show the data here, one can observe from
@@ -415,9 +416,10 @@
 			</p>
 
 			<p>
-				Lastly, we're also interested in looking not just at the number of buildings that have been converted from residential units to condominiums, we're also interested in the number of
-				actual units that have undergone conversion, as this may give us a better sense of the actual number of individuals affected in these neighborhoods. For example, a handful of 3 unit
-				rental townhomes converting to condominiums would displace fewer renters than the conversion of a single large apartment building housing a hundred units.
+				Lastly, we're also interested in looking not just at the number of buildings that have been converted, but also the number of actual units that
+				have undergone conversion, as this may give us a better sense of the actual number of individuals affected in these neighborhoods. For example,
+				a handful of 3 unit rental townhomes converting to condominiums would displace fewer renters than the conversion of a single large apartment
+				building housing a hundred units.
 			</p>
 			<figure>
 				<img src="images/14_units_by_neighborhood.svg" alt="Condo conversion events by year, faceted by neighborhood." />
