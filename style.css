@@ -1,5 +1,6 @@
 html {
 	--color-accent: oklch(65% 50% 0);
+	color-scheme: light dark;
 }
 
 body {
@@ -22,6 +23,14 @@ label, input, textarea {
 label {
 	/* Add some space before each label that grows as the font size grows */
 	margin-top: 1em;
+}
+
+.color-scheme {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	font-family: inherit;
+	font-size: 80%;
 }
 
 input, textarea {
@@ -53,11 +62,12 @@ h1, h2, h3, h4 {
 }
 
 nav {
+	--border-color: oklch(50% 10% 200 / 40%);
 	display: flex;
 	margin-bottom: 1cm;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	border-bottom-color: oklch(80% 3% 200);
+	border-bottom-color: var(--border-color);
 
 	a {
 		flex: 1;
@@ -71,7 +81,7 @@ nav {
 			border-bottom-width: 0.4em;
 			border-bottom-style: solid;
 			border-bottom-color: var(--color-accent);
-			background-color: oklch(from var(--color-accent) 95% 5% h);
+			background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 		}
 	}
 }
